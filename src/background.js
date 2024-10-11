@@ -96,14 +96,23 @@ function sendMsg(content, full_server_url = "", msgType = "normal") {
 			});
 			// chrome.tabs.create({ 'url': 'chrome://extensions/?options=' + chrome.runtime.id });
 		} else {
+			const {origin, pathname, search } = new URL(items.server_urls[0].server_url)
+
+			const params = search.split('?').pop()
+
+			const url = origin + pathname + '/'
+
 			if (full_server_url === "") {
 				full_server_url = items.server_urls[0].server_url;
 			}
 			if (full_server_url.startsWith("selection#")) {
 				full_server_url = full_server_url.replace(/selection#/g, "")
 			}
-
-			console.log(full_server_url);
+			
+			const paths = url + encodeURIComponent(content) + "?automaticallyCopy=" + auto_copy_flag + '&' + params
+			console.log({
+				full_server_url, url, paths
+			});
 
 			var notify_callback = function () {
 					var notification = new Notification("Message Sent", {
@@ -114,10 +123,10 @@ function sendMsg(content, full_server_url = "", msgType = "normal") {
 
 			if (full_server_url.startsWith("http") || full_server_url.startsWith("https")) {
 				// iPhone push
-				httpGetAsync(full_server_url + encodeURIComponent(content) + "?automaticallyCopy=" + auto_copy_flag, notify_callback);
+				httpGetAsync(url + encodeURIComponent(content) + "?automaticallyCopy=" + auto_copy_flag + '&' + params, notify_callback);
 			} else {
 				// Android push
-				pushAndroidMsg(full_server_url, content, notify_callback, msgType);
+				pushAndroidMsg(url, content, notify_callback, msgType);
 			}
 
 			
