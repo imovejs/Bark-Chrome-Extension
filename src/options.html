@@ -2,16 +2,46 @@
 <html>
 
 <head>
-	<title>Bark Settings</title>
+	<title>Bark-revision Settings</title>
 
 	<style>
+		ul li {
+			margin: 0;
+			padding: 0;
+			list-style: none;
+		}
 		#status {
 			background-color: #dfdfdf;
 			width: 200px;
 			font-size: 1.4em;
 		}
-		u {
-			margin-right: 15px;
+		.url {
+			padding: 10px;
+			border: 1px solid #eee;
+			margin-bottom: 5px;
+			transition: all 0.2s;
+		}
+		.urlbox {
+			display: flex;
+			align-items: center;
+		}
+		.url .name {
+			font-weight: bold;
+			font-size: 14px;
+		}
+		.textEllipsis {
+			max-width: 600px;
+			display: -webkit-box;
+			-webkit-line-clamp: 2;
+			-webkit-box-orient: vertical;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			color: #999;
+		}
+		.btn-delete {
+			color: red;
+			margin-left: 10px;
+			cursor: pointer;
 		}
 	</style>
 </head>
